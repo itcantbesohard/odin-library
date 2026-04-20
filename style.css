@@ -315,7 +315,6 @@ body {
     color: var(--text);
 }
 
-
 .modal-body .checkbox input {
     background-color: var(--accent);
 }

@@ -2,7 +2,6 @@ const booksSection = document.querySelector(".books");
 const modal = document.querySelector(".modal");
 const backdrop = document.querySelector(".modal-backdrop");
 
-
 const addBtn = document.querySelector(".btn.primary");
 const closeBtn = modal.querySelector(".close-btn");
 const cancelBtn = modal.querySelector(".btn.cancel");
@@ -213,7 +212,6 @@ form.addEventListener("submit", e => {
     closeModal();
 });
 
-
 booksSection.addEventListener("click", e => {
     const button = e.target.closest("button[data-action]");
     if (!button) return;
@@ -237,6 +235,5 @@ searchInput.addEventListener("input", e => {
     searchQuery = e.target.value.toLowerCase();
     render();
 });
-
 
 seedLibrary();
