@@ -6,10 +6,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Library</title>
     <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="main.js"></script>
+    <script src="main.js" defer></script>
 </head>
 
 <body>
+    <main class="container">
+        <header class="toolbar">
+            <h1 class="title">Simple Library</h1>
+
+            <div class="actions">
+                <input type="search" placeholder="Search books">
+                <button class="btn primary" id="add-book" title="Add book">Add book</button>
+            </div>
+        </header>
+
+        <section class="books">
+            <div class="table-header">
+                <span>Title</span>
+                <span>Author</span>
+                <span>Pages</span>
+                <span>Status</span>
+                <span class="actions-col">Actions</span>
+            </div>
+
+            <article class="row">
+                <span class="title">Clean Code</span>
+                <span class="author">Robert C. Martin</span>
+                <span class="pages">464</span>
+                <span class="status read">Read</span>
+
+                <div class="row-actions">
+                    <button data-action="edit" title="Edit">Edit</button>
+                    <button data-action="remove" title="Remove">Remove</button>
+                </div>
+            </article>
+        </section>
+
+        <footer class="status-bar">
+            <span>Total pages: 1</span>
+        </footer>
+
+    </main>
+
+
+    <!-- BACKDROP -->
+    <div class="modal-backdrop hidden"></div>
+
+    <!-- MODAL -->
+    <div class="modal hidden" role="dialog" aria-modal="true">
+
+        <header class="modal-header">
+            <h2>Add Book</h2>
+            <button class="close-btn" aria-label="Close">✕</button>
+        </header>
+
+        <form class="modal-body">
+            <label>
+                Title
+                <input type="text" name="title" required>
+            </label>
+
+            <label>
+                Author
+                <input type="text" name="author" required>
+            </label>
+
+            <label>
+                Pages
+                <input type="number" name="pages" min="1" required>
+            </label>
+
+            <label class="checkbox">
+                <input type="checkbox" name="read">
+                Mark as read
+            </label>
+
+            <footer class="modal-footer">
+                <button type="button" class="btn cancel">Cancel</button>
+                <button type="submit" class="btn primary">Add</button>
+            </footer>
+        </form>
+    </div>
+
 
 </body>
 

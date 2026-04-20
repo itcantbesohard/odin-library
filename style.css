@@ -1,0 +1,402 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #0f0f10;
+    --surface: #1c1c1e;
+    --surface-hover: #2a2a2c;
+    --border: #2c2c2e;
+
+    --text: #f5f5f7;
+    --subtext: #9a9a9e;
+
+    --accent: #0a1aff;
+    --danger: #ff453a;
+    --success: #32d74b;
+}
+
+
+body {
+    font-family: "SF Pro Text", "Inter", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 0;
+}
+
+/* ===== Layout ===== */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 20px;
+}
+
+/* ===== Toolbar ===== */
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.actions input[type="search"] {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: var(--text);
+    font-size: 14px;
+    width: 250px;
+}
+
+
+.actions input::placeholder {
+    color: var(--subtext);
+}
+
+
+.actions input:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+/* ===== Buttons ===== */
+.btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    color: var(--text);
+    font-size: 14px;
+}
+
+.btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.btn:hover {
+    background: var(--surface-hover);
+    border: 1px solid var(--border);
+    cursor: pointer;
+}
+
+/* ===== Books section ===== */
+.books {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* ===== Table header ===== */
+.table-header {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 1fr auto;
+    gap: 12px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: var(--subtext);
+    border-bottom: 1px solid var(--border);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.actions-col {
+    text-align: right;
+    opacity: 0;
+    /* Apple style: ukryty nagłówek */
+    pointer-events: none;
+}
+
+
+/* ===== Rows ===== */
+.row {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 1fr auto;
+    gap: 12px;
+    padding: 12px 16px;
+    align-items: center;
+}
+
+.row:not(:last-child) {
+    border-bottom: 1px solid var(--border);
+}
+
+
+.row:hover {
+    background: var(--surface-hover);
+}
+
+
+/* ===== Text styles ===== */
+.row .title {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.author,
+.pages {
+    font-size: 14px;
+    color: var(--subtext);
+}
+
+.row .pages,
+.row .status {
+    justify-self: center;
+}
+
+.status {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.status.read {
+    color: var(--success);
+}
+
+.status.unread {
+    color: var(--subtext);
+}
+
+
+/* ===== Row actions ===== */
+.row-actions {
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    justify-self: end;
+}
+
+.row:hover .row-actions {
+    opacity: 1;
+}
+
+.row-actions button {
+    background: none;
+    border: none;
+    color: var(--subtext);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px;
+}
+
+.row-actions button:hover {
+    color: var(--text);
+}
+
+
+.row-actions button:last-child:hover {
+    color: var(--danger);
+}
+
+/* ===== Status bar ===== */
+.status-bar {
+    margin-top: 12px;
+    padding: 10px 16px;
+    border-top: 1px solid var(--border);
+    color: var(--subtext);
+    font-size: 13px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+/* ===== Modal backdrop ===== */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(6px);
+    z-index: 100;
+}
+
+.modal-backdrop.hidden {
+    display: none;
+}
+
+
+/* ===== Modal ===== */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -48%);
+    width: 420px;
+    background: var(--surface);
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    z-index: 101;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-header {
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: var(--subtext);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: var(--text);
+}
+
+.modal-body {
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.modal-body label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--subtext);
+}
+
+.modal-body input[type="text"],
+.modal-body input[type="number"] {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 10px;
+    color: var(--text);
+    font-size: 14px;
+}
+
+.modal-body input:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.modal-body .checkbox {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text);
+}
+
+
+.modal-body .checkbox input {
+    background-color: var(--accent);
+}
+
+.modal-footer {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn.cancel {
+    background: none;
+    border: none;
+    color: var(--subtext);
+}
+
+.btn.cancel:hover {
+    color: var(--text);
+}
+
+
+@media (max-width: 768px) {
+
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+
+    .actions {
+        width: 100%;
+    }
+
+    .actions input[type="search"] {
+        width: 100%;
+    }
+
+    .btn.primary {
+        width: 150px;
+    }
+
+
+    .table-header {
+        display: none;
+    }
+
+    .row {
+        grid-template-columns: 1fr 0.5fr auto;
+        grid-template-areas:
+            "title status actions"
+            "author pages actions";
+        gap: 8px;
+    }
+
+    .row .title {
+        grid-area: title;
+        font-size: 16px;
+    }
+
+    .row-actions {
+        grid-area: actions;
+        opacity: 1;
+        display: grid;
+        font-size: 13px;
+    }
+
+    .author {
+        grid-area: author;
+        font-size: 13px;
+    }
+
+    .status {
+        grid-area: status;
+        font-size: 13px;
+    }
+
+    .pages {
+        grid-area: pages;
+        font-size: 13px;
+    }
+
+}
