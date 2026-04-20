@@ -14,21 +14,14 @@ const submitBtn = modal.querySelector('button[type="submit"]');
 const myLibrary = [];
 let editingId = null;
 
-function Book(title = "", author = "", pages = 0, read = false) {
-    if (!new.target) {
-        throw Error("You must use the 'new' operator to call the constructor");
+class Book {
+    constructor(title, author, pages, read = false) {
+        this.id = crypto.randomUUID();
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
     }
-    this.id = crypto.randomUUID();
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-
-    this.info = function () {
-        console.log(`${this.title} by ${this.author}, ${this.pages} pages, ` +
-            (this.read ? "readed" : "not read yet"))
-            ;
-    };
 }
 
 function seedLibrary() {
@@ -108,7 +101,6 @@ function renderLibrary() {
     });
 
 }
-
 
 function removeBookFromLibrary(bookId) {
     const index = myLibrary.findIndex(book => book.id === bookId);
