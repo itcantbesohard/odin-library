@@ -87,8 +87,7 @@ function createBookRow(book) {
     return row;
 }
 
-function renderLibrary() {
-    const booksSection = document.querySelector(".books");
+function render() {
 
     // delete old rows
     booksSection
