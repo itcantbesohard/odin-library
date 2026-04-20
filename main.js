@@ -6,6 +6,7 @@ const backdrop = document.querySelector(".modal-backdrop");
 const addBtn = document.querySelector(".btn.primary");
 const closeBtn = modal.querySelector(".close-btn");
 const cancelBtn = modal.querySelector(".btn.cancel");
+const searchInput = document.querySelector('input[type="search"]');
 
 const form = modal.querySelector("form");
 const modalTitle = modal.querySelector(".modal-header h2");
@@ -13,6 +14,7 @@ const submitBtn = modal.querySelector('button[type="submit"]');
 
 let library = [];
 let editingId = null;
+let searchQuery = "";
 
 class Book {
     constructor(title, author, pages, read = false) {
@@ -40,6 +42,42 @@ function seedLibrary() {
 function addBook(title, author, pages, read) {
     library.push(new Book(title, author, pages, read));
     render();
+}
+
+function updateBook(id, data) {
+    const book = library.find(b => b.id === id);
+    if (!book) return;
+
+    book.title = data.title;
+    book.author = data.author;
+    book.pages = data.pages;
+    book.read = data.read;
+
+    render();
+}
+
+function removeBook(bookId) {
+    const index = library.findIndex(book => book.id === bookId);
+    if (index !== -1) {
+        library.splice(index, 1);
+        render();
+    }
+
+};
+
+function render() {
+
+    // delete old rows
+    booksSection
+        .querySelectorAll(".row")
+        .forEach(row => row.remove());
+
+    library.filter(book => book.title.toLowerCase().includes(searchQuery) || book.author.toLowerCase().includes(searchQuery))
+        .forEach(book => {
+            const row = createBookRow(book);
+            booksSection.appendChild(row);
+        });
+
 }
 
 function createBookRow(book) {
@@ -87,29 +125,6 @@ function createBookRow(book) {
     return row;
 }
 
-function render() {
-
-    // delete old rows
-    booksSection
-        .querySelectorAll(".row")
-        .forEach(row => row.remove());
-
-    library.forEach(book => {
-        const row = createBookRow(book);
-        booksSection.appendChild(row);
-    });
-
-}
-
-function removeBook(bookId) {
-    const index = library.findIndex(book => book.id === bookId);
-    if (index !== -1) {
-        library.splice(index, 1);
-        render();
-    }
-
-};
-
 function changeBookReadStatus(bookId) {
     const book = library.find(book => book.id === bookId);
     if (book) {
@@ -149,7 +164,6 @@ function openEditModal(bookId) {
     modalTitle.textContent = "Edit Book";
     submitBtn.textContent = "Save";
 
-    // wypełnij pola
     form.elements.title.value = book.title;
     form.elements.author.value = book.author;
     form.elements.pages.value = book.pages;
@@ -201,10 +215,13 @@ form.addEventListener("submit", e => {
 
 
 booksSection.addEventListener("click", e => {
-    const action = e.target.dataset.action;
-    if (!action) return;
+    const button = e.target.closest("button[data-action]");
+    if (!button) return;
 
-    const row = e.target.closest(".row");
+    const action = button.dataset.action;
+    const row = button.closest(".row");
+    if (!row) return;
+
     const id = row.dataset.id;
 
     if (action === "remove") {
@@ -215,5 +232,11 @@ booksSection.addEventListener("click", e => {
         openEditModal(id);
     }
 });
+
+searchInput.addEventListener("input", e => {
+    searchQuery = e.target.value.toLowerCase();
+    render();
+});
+
 
 seedLibrary();
