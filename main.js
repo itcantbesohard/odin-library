@@ -33,13 +33,13 @@ function seedLibrary() {
     ];
 
     samples.forEach(([title, author, pages]) => {
-        addBookToLibrary(title, author, pages, Math.random() > 0.5);
+        addBook(title, author, pages, Math.random() > 0.5);
     });
 }
 
-function addBookToLibrary(title, author, pages, read) {
+function addBook(title, author, pages, read) {
     myLibrary.push(new Book(title, author, pages, read));
-    renderLibrary();
+    render();
 }
 
 function createBookRow(book) {
@@ -105,7 +105,7 @@ function removeBookFromLibrary(bookId) {
     const index = myLibrary.findIndex(book => book.id === bookId);
     if (index !== -1) {
         myLibrary.splice(index, 1);
-        renderLibrary();
+        render();
     }
 
 };
@@ -114,7 +114,7 @@ function changeBookReadStatus(bookId) {
     const book = myLibrary.find(book => book.id === bookId);
     if (book) {
         book.read = !book.read;
-        renderLibrary();
+        render();
     }
 }
 
@@ -183,7 +183,7 @@ form.addEventListener("submit", e => {
 
     if (editingId === null) {
         // ADD
-        addBookToLibrary(title, author, pages, read);
+        addBook(title, author, pages, read);
     } else {
         // EDIT
         const book = myLibrary.find(b => b.id === editingId);
@@ -193,7 +193,7 @@ form.addEventListener("submit", e => {
             book.pages = pages;
             book.read = read;
         }
-        renderLibrary();
+        render();
     }
 
     closeModal();
