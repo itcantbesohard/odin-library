@@ -11,7 +11,7 @@ const form = modal.querySelector("form");
 const modalTitle = modal.querySelector(".modal-header h2");
 const submitBtn = modal.querySelector('button[type="submit"]');
 
-const myLibrary = [];
+let library = [];
 let editingId = null;
 
 class Book {
@@ -38,7 +38,7 @@ function seedLibrary() {
 }
 
 function addBook(title, author, pages, read) {
-    myLibrary.push(new Book(title, author, pages, read));
+    library.push(new Book(title, author, pages, read));
     render();
 }
 
@@ -94,24 +94,24 @@ function render() {
         .querySelectorAll(".row")
         .forEach(row => row.remove());
 
-    myLibrary.forEach(book => {
+    library.forEach(book => {
         const row = createBookRow(book);
         booksSection.appendChild(row);
     });
 
 }
 
-function removeBookFromLibrary(bookId) {
-    const index = myLibrary.findIndex(book => book.id === bookId);
+function removeBook(bookId) {
+    const index = library.findIndex(book => book.id === bookId);
     if (index !== -1) {
-        myLibrary.splice(index, 1);
+        library.splice(index, 1);
         render();
     }
 
 };
 
 function changeBookReadStatus(bookId) {
-    const book = myLibrary.find(book => book.id === bookId);
+    const book = library.find(book => book.id === bookId);
     if (book) {
         book.read = !book.read;
         render();
@@ -141,7 +141,7 @@ function openAddModal() {
 }
 
 function openEditModal(bookId) {
-    const book = myLibrary.find(b => b.id === bookId);
+    const book = library.find(b => b.id === bookId);
     if (!book) return;
 
     editingId = bookId;
@@ -186,7 +186,7 @@ form.addEventListener("submit", e => {
         addBook(title, author, pages, read);
     } else {
         // EDIT
-        const book = myLibrary.find(b => b.id === editingId);
+        const book = library.find(b => b.id === editingId);
         if (book) {
             book.title = title;
             book.author = author;
@@ -208,7 +208,7 @@ booksSection.addEventListener("click", e => {
     const id = row.dataset.id;
 
     if (action === "remove") {
-        removeBookFromLibrary(id);
+        removeBook(id);
     }
 
     if (action === "edit") {
